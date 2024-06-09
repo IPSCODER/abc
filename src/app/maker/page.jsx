@@ -93,21 +93,20 @@ class App extends Component {
 
   _onDrop = (data, cb) => {
     // no need to ask id and name again
+
+    if (typeof window === "undefined") {
     if (data.payload && data.payload.dropped) {
       return cb(data);
+    }
     }
 
     let name = data.name;
 
-    if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN && typeof window !== "undefined" ) {
+    if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN) {
       name = window.prompt('Enter name of field');
     }
-
-     var id;
-
-    if (typeof window !== "undefined") {
-      id = window.prompt('Please enter unique ID')
-    }
+  
+    const id = window.prompt('Please enter unique ID');
 
     const result = cb({
       ...data,
@@ -130,9 +129,12 @@ class App extends Component {
   }
 
   render() {
+    const isWindowDefined = typeof window !== "undefined";
     return (
-      <div className="App container">
-        <Nav tabs className="justify-content-md-center">
+     <>
+      {isWindowDefined && ( 
+          <div className="App container">
+          <Nav tabs className="justify-content-md-center">
           <NavItem>
             <NavLink
               className={`${this.state.activeTab === '1' ? 'active' : ''}`}
@@ -193,7 +195,9 @@ class App extends Component {
             </Row>
           </TabPane> */}
         </TabContent>
-      </div>
+        </div>
+        )}
+     </>
     );
   }
 }
