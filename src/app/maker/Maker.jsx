@@ -57,11 +57,11 @@ class App extends Component {
     currentState: []
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     state.addEventListener('change', this._stateChange);
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillMount() {
     state.removeEventListener('change', this._stateChange);
   }
 
