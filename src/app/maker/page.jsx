@@ -58,11 +58,11 @@ class App extends Component {
     currentState: []
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     state.addEventListener('change', this._stateChange);
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillMount() {
     state.removeEventListener('change', this._stateChange);
   }
 
@@ -99,11 +99,15 @@ class App extends Component {
 
     let name = data.name;
 
-    if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN) {
+    if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN && typeof window !== "undefined" ) {
       name = window.prompt('Enter name of field');
     }
 
-    const id = window.prompt('Please enter unique ID');
+     var id;
+
+    if (typeof window !== "undefined") {
+      id = window.prompt('Please enter unique ID')
+    }
 
     const result = cb({
       ...data,
