@@ -6,7 +6,6 @@ import {
   Nav, NavItem, NavLink
  } from 'reactstrap';
 // import ReactJson from 'react-json-view';
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import {
   Canvas,
@@ -24,7 +23,7 @@ import DraggableHeader from './elements/DraggableHeader';
 
 import './App.css';
 
-class PageMaker extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -32,7 +31,7 @@ class PageMaker extends Component {
     registerPaletteElements([{
       type: elements.TEXTBOX,
       component: DraggableTextbox
-    }, {
+    },{
       type: elements.HEADER,
       component: DraggableHeader
     }]);
@@ -58,11 +57,11 @@ class PageMaker extends Component {
     currentState: []
   }
 
-  UNSAFE_componentWillMount() {
+  componentWillMount() {
     state.addEventListener('change', this._stateChange);
   }
 
-  UNSAFE_componentWillMount() {
+  componentWillUnmount() {
     state.removeEventListener('change', this._stateChange);
   }
 
@@ -72,7 +71,6 @@ class PageMaker extends Component {
       localStorage.setItem('initialElements', JSON.stringify(newState));
     });
   }
-  
 
   // re-hydrate canvas state
   initialElements = JSON.parse(localStorage.getItem('initialElements'))
@@ -83,8 +81,8 @@ class PageMaker extends Component {
     name: 'Text Field',
     id: 'f1',
     payload: { // initial data
-      fname: 'pravin sawant',
-      lname: 'Keer'
+      fname: 'Pravin',
+      lname: 'Sawant'
     }
   }, {
     type: elements.HEADER,
@@ -100,27 +98,11 @@ class PageMaker extends Component {
 
     let name = data.name;
 
-    // if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN && typeof window !== "undefined" ) {
-    //   name = window.prompt('Enter name of field');
-    // }
-
-    //  var id;
-
-    // if (typeof window !== "undefined") {
-    //   id = window.prompt('Please enter unique ID')
-    // }
-
-    if (typeof window !== "undefined") {
-      if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN) {
-        name = window.prompt('Enter name of field');
-      }
-  
-      id = window.prompt('Please enter unique ID');
-    } else {
-      // Handle server-side rendering scenario
-      name = ''; // Or provide a default value
-      id = '';   // Or generate a unique ID on the server-side
+    if (data.type === elements.TEXTBOX || data.type === elements.DROPDOWN) {
+      name = window.prompt('Enter name of field');
     }
+
+    const id = window.prompt('Please enter unique ID');
 
     const result = cb({
       ...data,
@@ -143,7 +125,6 @@ class PageMaker extends Component {
   }
 
   render() {
-    
     return (
       <div className="App container">
         <Nav tabs className="justify-content-md-center">
@@ -212,4 +193,4 @@ class PageMaker extends Component {
   }
 }
 
-export default PageMaker;
+export default App;
