@@ -3,7 +3,7 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 
 const PageMaker = dynamic(
-  () => import('./maker'),
+  () => import('./Maker'),
   { ssr: false }
 )
 
